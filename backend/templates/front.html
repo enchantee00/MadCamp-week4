@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flask NLP Model</title>
+    <style>
+        #mixed_color {
+            width: 100px;
+            height: 100px;
+            margin-top: 10px;
+            border: 1px solid #000;
+        }
+        .emotion-percentage {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Flask NLP Model</h1>
+    <form id="inputForm">
+        <textarea id="inputText" rows="4" cols="50"></textarea><br><br>
+        <input type="submit" value="Submit">
+    </form>
+    <h2>Output:</h2>
+    <div id="outputText">
+        <div id="emotion_percentages"></div>
+        <div id="mixed_color"></div>
+        <h3>Summary:</h3>
+        <div id="summary"></div>
+    </div>
+    <a href="/chat">Go to Chatbot</a>
+    <script>
+        document.getElementById('inputForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const inputText = document.getElementById('inputText').value;
+            const response = await fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({input_text: inputText}),
+            });
+            const data = await response.json();
+
+            // 감정 퍼센트 표시
+            const emotionPercentagesDiv = document.getElementById('emotion_percentages');
+            emotionPercentagesDiv.innerHTML = '';
+            for (const [emotion, percentage] of Object.entries(data.emotion_percentages)) {
+                const p = document.createElement('p');
+                p.className = 'emotion-percentage';
+                p.innerText = `${emotion}: ${(percentage * 100).toFixed(2)}%`;
+                emotionPercentagesDiv.appendChild(p);
+            }
+
+            // 혼합된 색상 표시
+            const colorBox = document.getElementById('mixed_color');
+            const [r, g, b] = data.mixed_color;
+            const alpha = 0.5;
+            colorBox.style.backgroundColor = `rgba(${r}, ${g}, ${b}, ${alpha})`;
+
+            // 요약 문장 표시
+            const summaryTextDiv = document.getElementById('summary');
+            summaryTextDiv.innerText = data.summary;
+        });
+    </script>
+</body>
+</html>
