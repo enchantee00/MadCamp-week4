@@ -48,6 +48,12 @@
         button:hover {
             background-color: #0056b3;
         }
+        #mixed_color {
+            width: 100px;
+            height: 100px;
+            margin-top: 10px;
+            border: 1px solid #000;
+        }
     </style>
 </head>
 <body>
@@ -57,13 +63,32 @@
             <!-- Messages will be displayed here -->
         </div>
         <textarea id="message" rows="3" placeholder="Type your message here..."></textarea>
+        <button onclick="startConversation()">Start Conversation</button>
         <button onclick="sendMessage()">Send</button>
+        <button onclick="endConversation()">End Conversation</button>
     </div>
-
+    <div id="mixed_color"></div>
+    <h3>Summary:</h3>
+    <div id="summary"></div>
     <script>
+        let threadId;
+
+        async function startConversation() {
+            const response = await fetch('/start_conversation', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            const data = await response.json();
+            threadId = data.thread_id;
+            document.getElementById('chatbox').innerHTML += `<p><strong>System:</strong> Conversation started with thread ID ${threadId}</p>`;
+        }
+
         async function sendMessage() {
             const message = document.getElementById('message').value;
-            if (!message) return;
+            if (!message || !threadId) return;
 
             // Display user's message
             const userMessageDiv = document.createElement('div');
@@ -80,7 +105,7 @@
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ message: message }),
+                body: JSON.stringify({ message: message, thread_id: threadId, username: "Jiyoon"}),
             });
 
             const data = await response.json();
@@ -90,9 +115,34 @@
             botMessageDiv.className = 'message bot-message';
             botMessageDiv.innerHTML = `<p><strong>Bot:</strong> ${data.message}</p>`;
             document.getElementById('chatbox').appendChild(botMessageDiv);
+        }
 
-            // Scroll to the bottom
-            document.getElementById('chatbox').scrollTop = document.getElementById('chatbox').scrollHeight;
+        async function endConversation() {
+            if (!threadId) return;
+
+            // End the conversation and analyze emotions
+            const response = await fetch('/end_conversation', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ thread_id: threadId }),
+            });
+
+            const data = await response.json();
+
+            // Display emotion analysis
+            document.getElementById('chatbox').innerHTML += `<p><strong>Emotion Analysis:</strong> ${JSON.stringify(data)}</p>`;
+
+            // 혼합된 색상 표시
+            const colorBox = document.getElementById('mixed_color');
+            const [r, g, b] = data.mixed_color;
+            const alpha = 0.5;
+            colorBox.style.backgroundColor = `rgba(${r}, ${g}, ${b}, ${alpha})`;
+
+            // 요약 문장 표시
+            const summaryTextDiv = document.getElementById('summary');
+            summaryTextDiv.innerText = data.summary;
         }
     </script>
 </body>

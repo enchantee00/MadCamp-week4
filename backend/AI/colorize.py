@@ -49,7 +49,7 @@ bertmodel = get_kobert_model()
 model = BERTClassifier(bertmodel, dr_rate=0.5).to('cuda')
 
 # 저장된 모델 가중치 로드
-model.load_state_dict(torch.load(os.path.join(model_save_path, 'pytorch_model.bin')))
+model.load_state_dict(torch.load(os.path.join(model_save_path, 'pytorch_model.bin')), strict=False)
 
 # 감정별 색상 정의 (RGB)
 emotion_colors = {
@@ -112,7 +112,7 @@ def predict_emotion(predict_sentence, max_len=64, device='cuda'):
 
     # 예측 결과
     labels = ["공포", "놀람", "분노", "슬픔", "중립", "행복", "혐오", "불안"]
-    emotion_percentages = {label: float(probabilities[i]) for i, label in enumerate(labels)}
+    emotion_percentages = {label: round(float(probabilities[i]), 4) for i, label in enumerate(labels)}
 
     # 색상 혼합 (파스텔 톤)
     mixed_color = mix_colors(probabilities, emotion_colors)

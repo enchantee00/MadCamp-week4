@@ -33,7 +33,7 @@
         document.getElementById('inputForm').addEventListener('submit', async function(event) {
             event.preventDefault();
             const inputText = document.getElementById('inputText').value;
-            const response = await fetch('/predict', {
+            const response = await fetch('/create', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -5,6 +5,7 @@ from transformers import TokenClassificationPipeline, AutoModelForTokenClassific
 from transformers import T5Tokenizer, T5ForConditionalGeneration
 from transformers import PreTrainedTokenizerFast
 from transformers import BartForConditionalGeneration
+import json
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -32,7 +33,7 @@ def summarize(input_text):
     # 입력 ID를 텐서로 변환하고 GPU로 이동
     summary_ids = model.generate(torch.tensor([input_ids]).to(device),  num_beams=4,  max_length=512,  eos_token_id=1)
     output = tokenizer.decode(summary_ids.squeeze().tolist(), skip_special_tokens=True)
-    return output
+    return {'output': output}
 
 
 # 키워드 추출
