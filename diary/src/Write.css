@@ -1,0 +1,49 @@
+/* App.css */
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden; /* 스크롤 숨기기 */
+    background-color: #fafafa;
+  }
+  
+  .inner_header {
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    height: 10vh;
+  }
+  
+  .header-image {
+    max-height: 60%;
+  }
+      
+  .markdown-input {
+    margin-top: 5vh;
+    margin-left: 5vh;
+    width: 60vw;
+    height : 50vh;
+    padding: 20px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  }
+    
+  #footer {
+    display: flex;
+    justify-content: flex-end;
+    height: 5vh;
+    background-color: #fafafa;
+  }
+  
+  #footer button {
+    margin-right: 18vw;
+    width: 20vw;
+    height: 5vh;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  

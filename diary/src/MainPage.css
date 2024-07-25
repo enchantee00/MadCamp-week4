@@ -1,0 +1,151 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden; /* 스크롤 숨기기 */
+}
+
+.Main-header {
+  height: 10vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.header-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.ShowCal {
+  width: 100vw;
+  height: 90vh; /* 화면의 80% 높이로 설정 */
+  display: flex;
+  background-color: rgba(240, 240, 240, 1); /* 투명도를 낮춘 배경색 */
+  border-radius: 10px;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  position: relative;
+}
+
+.Calendar {
+  display: flex;
+  width: 60vw;
+  justify-content: center; /* 수평 가운데 정렬 */
+  align-items: center; /* 수직 가운데 정렬 */
+  border-right: 1px solid black;
+}
+
+.Circle {
+  display: flex;
+  width: 40vw;
+  justify-content: center; /* 수평 가운데 정렬 */
+  align-items: center; /* 수직 가운데 정렬 */
+}
+
+.Calendar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60vw; /* 너비 조정 */
+  justify-content: space-between;
+}
+
+.calendar-header {
+  margin-top: 10vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%; /* header 너비를 화면 너비로 맞춤 */
+  background-color: #fff; /* 배경색을 흰색으로 고정 */
+  padding: 10px; /* 패딩 추가 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+  margin-bottom: 5vh;
+}
+
+#calendar {
+  width: 70%;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7열 그리드 */
+  gap: 7px; /* 셀 간격 */
+  font-family: 'Metal Mania', Arial, sans-serif; /* 글씨체 변경 */
+}
+
+.day-name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 5vh;
+  font-weight: bold;
+  background-color: #f0f0f0;
+}
+
+.day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 8vh;
+  background-color: #fff;
+  border-radius: 3px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.day.other-month {
+  background-color: #f0f0f0;
+}
+
+.overlay-container {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 70vw;
+  height: 70vh;
+  background-color: rgba(200, 200, 200, 0.8);
+  /* border: 2px solid blue; */
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  z-index: 10;
+}
+
+.overlay-container h1{
+  font-family : 'Metal Mania';
+  margin-top : 5vh;
+}
+
+.overlay-buttons {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.big-button {
+  margin-top : 1vh;
+  margin-left : 5vw;
+  margin-right : 5vw;
+  width: 40vh;
+  height: 40vh;
+  background-color: #f0f0f0;
+  color : #000;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.close-button {
+  width: 35vw;
+  height: 5vh;
+  margin-top : 3vh;
+  background-color: #f0f0f0;
+  color : #000;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-size: 18px;
+  cursor: pointer;
+}
