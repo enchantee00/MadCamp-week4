@@ -3,23 +3,19 @@ import './Chat.css';
 import headerImage from './logo.png'; // 이미지 파일 가져오기
 import { useLocation, useNavigate } from 'react-router-dom';
 
-
 const Chat = () => {
+  const location = useLocation();
+  const userId = location.state?.userId;
+  const username = location.state?.username;
+  const tId = location.state?.threadId;
 
-    const location = useLocation();
-    const userId = location.state?.userId;
-    const username = location.state?.username;
-    const tId = location.state?.threadId;
-    
-    
-    console.log(tId);
-    const [threadId, setThreadId] = useState(tId);
-    
-    const [messages, setMessages] = useState([]);
-    const [input, setInput] = useState('');
-    const [showPopup, setShowPopup] = useState(false);
-    const [emotionPercentages, setEmotionPercentages] = useState({});
-    const baseURL = process.env.REACT_APP_BASE_URL;
+  console.log(tId);
+  const [threadId, setThreadId] = useState(tId);
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
+  const [emotionPercentages, setEmotionPercentages] = useState({});
+  const baseURL = process.env.REACT_APP_BASE_URL;
 
   const toPastelColor = (r, g, b, pastelFactor = 0.5) => {
     r = (r + 255 * pastelFactor) / (1 + pastelFactor);
@@ -39,7 +35,6 @@ const Chat = () => {
     "불안": toPastelColor(255, 165, 0)     // 주황
   };
 
-  
   const navigate = useNavigate();
   const handleLogoClick = () => {
     navigate('/main', { state: { userId } });
@@ -51,6 +46,7 @@ const Chat = () => {
     setMessages(prevMessages => [...prevMessages, { sender: 'user', text: input }]);
     setInput('');
 
+    console.log(username);
     const response = await fetch(`http://172.10.5.46:80/chat_response`, {
       method: 'POST',
       headers: {
@@ -71,12 +67,14 @@ const Chat = () => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ thread_id: threadId, user_id: 1, created_at: new Date().toISOString().split('T')[0] }),
+      body: JSON.stringify({ thread_id: threadId, user_id: userId, created_at: new Date().toISOString().split('T')[0] }),
     });
 
     const data = await response.json();
-    setEmotionPercentages(data.emotion_percentages);
-    setShowPopup(true);
+    setShowPopup(true); // First, show the popup
+    setTimeout(() => {
+      setEmotionPercentages(data.emotion_percentages); // Then, set the emotion percentages after a short delay
+    }, 100);
   };
 
   const handleKeyPress = (event) => {
@@ -89,12 +87,12 @@ const Chat = () => {
   return (
     <div className="ChatPage">
       <div className="Chat-header">
-        <img 
-            src={headerImage}
-            alt="Logo" 
-            className="header-image" 
-            onClick={handleLogoClick} 
-            style={{ cursor: 'pointer' }} 
+        <img
+          src={headerImage}
+          alt="Logo"
+          className="header-image"
+          onClick={handleLogoClick}
+          style={{ cursor: 'pointer' }}
         />
       </div>
       <div className="chat-container">

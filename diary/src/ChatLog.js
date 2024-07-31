@@ -1,21 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import './Chat.css';
+import { useLocation, useNavigate } from 'react-router-dom';
 import headerImage from './logo.png'; // 이미지 파일 가져오기
 
 
-const ChatLog = ({ userId, diaryId }) => {
+const ChatLog = () => {
+  const location = useLocation();
+  const userId = location.state?.userId;
+  const diaryId = location.state?.diaryId;
   const [diary, setDiary] = useState(null);
   const baseURL = process.env.REACT_APP_BASE_URL;
+  const navigate = useNavigate();
+  console.log(userId, diaryId);
 
   const handleLogoClick = () => {
-    window.location.reload();
+    navigate('/main', { state: { userId } });
   };
 
   useEffect(() => {
     const fetchDiary = async () => {
       try {
-        // const response = await fetch(`http://172.10.5.46:80/read/${userId}/${diaryId}`);
-        const response = await fetch(`http://172.10.5.46:80/read/1/20`);
+        
+        const response = await fetch(`http://172.10.5.46:80/read/${userId}/${diaryId}`);
+        // const response = await fetch(`http://172.10.5.46:80/read/1/20`);
         const data = await response.json();
         if (data.status === 'success') {
           setDiary(data.diary);

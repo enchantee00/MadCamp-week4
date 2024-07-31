@@ -101,7 +101,7 @@ html, body {
   transform: translate(-50%, 0);
   width: 70vw;
   height: 70vh;
-  background-color: rgba(200, 200, 200, 0.8);
+  background-color: rgba(200, 200, 200, 0.96);
   /* border: 2px solid blue; */
   border-radius: 10px;
   display: flex;
@@ -111,9 +111,9 @@ html, body {
   z-index: 10;
 }
 
-.overlay-container h1{
-  font-family : 'Metal Mania';
-  margin-top : 5vh;
+.overlay-container h1 {
+  font-family : 'Varta';
+  margin-top : 4vh;
 }
 
 .overlay-buttons {
@@ -137,15 +137,24 @@ html, body {
   cursor: pointer;
 }
 
+.big-button.button1 {
+  background-image: url('./write.png');
+}
+
+.big-button.button2 {
+  background-image: url('./chatbot.png');
+}
+
 .close-button {
   width: 35vw;
-  height: 5vh;
+  height: 6vh;
   margin-top : 3vh;
-  background-color: #f0f0f0;
-  color : #000;
+  background-color: #000;
+  color : #fff;
   border: none;
-  border-radius: 10px;
+  border-radius: 1px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-family : 'Varta';
   font-size: 18px;
   cursor: pointer;
 }

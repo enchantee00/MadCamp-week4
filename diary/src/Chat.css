@@ -75,7 +75,7 @@
 }
 
 #chatboxlog {
-  height: 500px;  /* 원하는 높이로 설정 */
+  height: 50vh;  /* 원하는 높이로 설정 */
   overflow-y: auto;  /* 세로 스크롤바 추가 */
   border: 1px solid #ccc;
   padding: 10px;

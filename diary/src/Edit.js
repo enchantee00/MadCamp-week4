@@ -4,33 +4,34 @@ import headerImage from './logo.png';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 
-const Write = () => {
-  const [markdownText, setMarkdownText] = useState('');
+const Edit = () => {
+  
   const [loading, setLoading] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const userId = location.state?.userId;
+  const diaryId = location.state?.diaryId;
+  const diarycontent = location.state?.content;
+  const [markdownText, setMarkdownText] = useState(diarycontent);
 
   const handleTextChange = (event) => {
     setMarkdownText(event.target.value);
   };
 
   const handleLogoClick = () => {
-    navigate('/main', { state: { userId } });
+    window.location.reload();
   };
 
   const handleSubmit = async () => {
     const requestData = {
       content: markdownText,
-      user_id: userId,
-      created_at: new Date().toISOString().split('T')[0]
+      diary_id: diaryId,
     };
 
     setLoading(true); // 로딩 시작
 
     try {
-      const response = await fetch('http://172.10.5.46:80/create', {
-        method: 'POST',
+      const response = await fetch('http://172.10.5.46:80/edit', {
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -71,7 +72,7 @@ const Write = () => {
           className="markdown-input"
         />
         <button onClick={handleSubmit} disabled={loading}>
-          {loading ? 'Loading...' : '완료'}
+          {loading ? 'Loading...' : '수정'}
         </button>
       </div>
       {loading && (
@@ -83,4 +84,4 @@ const Write = () => {
   );
 };
 
-export default Write;
+export default Edit;

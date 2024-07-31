@@ -5,6 +5,8 @@ import Write from './Write';
 import Show from './Show';
 import Chat from './Chat';
 import Main from './MainPage';
+import Edit from './Edit';
+import ChatLog from './ChatLog';
 
 const LoginScreen = () => {
   const [username, setUsername] = useState('');
@@ -140,10 +142,14 @@ const App = () => {
         <Route path="/" element={<LoginScreen />} />        
         <Route path="/Write" element={<Write />} />
         <Route path="/Show" element={<Show />} />
+        <Route path="/edit" element={<Edit />} />
         <Route path="/Chat" element={<Chat />} />
+        <Route path="/Chatlog" element={<ChatLog />} />
       </Routes>
     </Router>
   );
 };
 
 export default App;
+
+

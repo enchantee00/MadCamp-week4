@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import './MainPage.css';
 import headerImage from './logo.png'; // 이미지 파일 가져오기
 import { useLocation, useNavigate } from 'react-router-dom';
+import writeImage from './write.png';
+import chatbotImage from './chatbot.png';
 
 function get_max_index(dict) {
     let emotion = { 공포: 0, 놀람: 1, 분노: 2, 슬픔: 3, 중립: 4, 행복: 5, 혐오: 6, 불안: 7 };
@@ -170,7 +172,7 @@ const CircularProgressBar = ({ progress, statics }) => {
     const circles = new Array(len);
     count = 0;
     for (let i = 0; i < len; i++) {
-        circles[i] = { stroke: `${colors[i]}`, transform: `rotate(${count} ${radius} ${radius})`, progressOffset: progressOffset[i], arcCircumference: arc_circumference[i] };
+        circles[i] = { stroke: `${colors[i]}`, transform: `rotate(${count} ${radius} ${radius})`, progressOffset: progressOffset[i], arcCircumference: arc_circumference[i], text: `Emotion: ${i}, Value: ${statics[i]}` };
         count += arc[i];
     }
 
@@ -197,7 +199,9 @@ const CircularProgressBar = ({ progress, statics }) => {
                         cx={radius}
                         cy={radius}
                         transform={circle.transform}
-                    />
+                    >
+                        <title>{circle.text}</title>
+                    </circle>
                 ))}
             </>
         </svg>
@@ -268,6 +272,7 @@ const MainPage = () => {
                 method: 'GET'
         });
         const data = await response.json();
+
 
         navigate('/Chat', { state: {userId : userId, username: username, threadId : data['thread_id']} });
     };
@@ -371,8 +376,8 @@ const MainPage = () => {
                 <div className="overlay-container">
                     <h1>일기장 형식을 골라주세요</h1>
                     <div className="overlay-buttons">
-                        <button className="big-button" onClick={handleButton1Click}>글로 쓰기</button>
-                        <button className="big-button" onClick={handleButton2Click}>ChatBot과 같이 쓰기</button>
+                        <button className="big-button button1" onClick={handleButton1Click}></button>
+                        <button className="big-button button2" onClick={handleButton2Click}></button>
                     </div>
                     <button className="close-button" onClick={handleCloseClick}>Close</button>
                 </div>
